@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 const IPINFO_TOKEN = import.meta.env.VITE_IPINFO_TOKEN;
+const API_KEY = import.meta.env.VITE_OPENWEATHER_KEY;
 
 const LocationButton = ({ setCity }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +42,7 @@ const LocationButton = ({ setCity }) => {
         async (position) => {
           try {
             const response = await fetch(
-              `https://api.openweathermap.org/geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&limit=1&appid=215f44f09bd69755d28776f0e5cb6236`
+              `https://api.openweathermap.org/geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&limit=1&appid=${API_KEY}`
             );
             const data = await response.json();
 
