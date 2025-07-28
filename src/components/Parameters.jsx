@@ -17,14 +17,14 @@ const Parameters = ({ dayData, unitSystem }) => {
   };
 
   return (
-    <div className="flex flex-col text-white justify-center items-center w-full lg:p-0 ">
+    <div className="flex flex-col text-white dark:text-[#1d2a46] justify-center items-center w-full lg:p-0 ">
       <div className="w-full lg:w-[800px]">
-        <h2 className="text-2xl lg:text-3xl font-semibold py-2 lg:py-4 lg:pt-20">
+        <h2 className="text-2xl lg:text-3xl font-semibold py-2 lg:py-4 lg:pt-20 dark:font-bold">
           Today's Hightlights
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-7">
-          <div className="bg-[#1f213b] p-4 rounded-lg text-center">
-            <p className="text-gray-400 text-base lg:text-[18px]">
+          <div className="bg-[#1f213b] dark:bg-sky-500 p-4 rounded-lg text-center dark:border dark:border-[#1f213b]">
+            <p className="text-gray-400 dark:text-black text-base lg:text-[18px]">
               Wind Status
             </p>
             <p className="text-4xl lg:text-6xl font-bold p-3 lg:p-5">
@@ -33,7 +33,7 @@ const Parameters = ({ dayData, unitSystem }) => {
             </p>
             <div className="flex items-center justify-center gap-2">
               <div
-                className="flex justify-center items-center w-8 h-8 rounded-full bg-[#ffffff4d]"
+                className="flex justify-center items-center w-8 h-8 rounded-full bg-[#ffffff4d] dark:bg-[#1e2e4f]"
                 style={{ transform: `rotate(${dayData.wind_deg}deg)` }}
               >
                 <img
@@ -47,13 +47,15 @@ const Parameters = ({ dayData, unitSystem }) => {
             </div>
           </div>
 
-          <div className="bg-[#1f213b] p-4 rounded-lg text-center px-15">
-            <p className="text-gray-400 text-base lg:text-[18px]">Humidity</p>
+          <div className="bg-[#1f213b] dark:bg-sky-500 p-4 rounded-lg text-center px-15 dark:border dark:border-[#1f213b]">
+            <p className="text-gray-400 dark:text-black text-base lg:text-[18px]">
+              Humidity
+            </p>
             <p className="text-4xl lg:text-6xl font-bold p-3 lg:p-5">
               {dayData.humidity}
               <span className="text-base lg:text-lg">%</span>
             </p>
-            <div className="text-xs lg:text-[12px] justify-between flex text-gray-300">
+            <div className="text-xs lg:text-[12px] justify-between flex text-gray-300 dark:text-black">
               <span>0</span>
               <span>50</span>
               <span>100</span>
@@ -64,21 +66,23 @@ const Parameters = ({ dayData, unitSystem }) => {
                 style={{ width: `${dayData.humidity}%` }}
               ></div>
             </div>
-            <span className="text-xs lg:text-[12px] justify-end flex text-gray-300 mt-1">
+            <span className="text-xs lg:text-[12px] justify-end flex text-gray-300 dark:text-black mt-1">
               %
             </span>
           </div>
 
-          <div className="bg-[#1f213b] p-4 rounded-lg text-center">
-            <p className="text-gray-400 text-base lg:text-[18px]">Visibility</p>
+          <div className="bg-[#1f213b] dark:bg-sky-500 p-4 rounded-lg text-center dark:border dark:border-[#1f213b]">
+            <p className="text-gray-400 text-base lg:text-[18px] dark:text-black">
+              Visibility
+            </p>
             <p className="text-4xl lg:text-6xl font-bold p-3 lg:p-5">
               {visibility}
               <span className="text-base lg:text-lg"> {visibilityUnit}</span>
             </p>
           </div>
 
-          <div className="bg-[#1f213b] p-4 rounded-lg text-center">
-            <p className="text-gray-400 text-base lg:text-[18px]">
+          <div className="bg-[#1f213b] dark:bg-sky-500 p-4 rounded-lg text-center dark:border dark:border-[#1f213b]">
+            <p className="text-gray-400 text-base lg:text-[18px] dark:text-black">
               Air Pressure
             </p>
             <p className="text-4xl lg:text-6xl font-bold p-3 lg:p-5">
@@ -88,7 +92,7 @@ const Parameters = ({ dayData, unitSystem }) => {
           </div>
         </div>
       </div>
-      <p className="text-xs lg:text-[12px] p-4 text-gray-300">
+      <p className="text-xs lg:text-[12px] p-4 text-gray-300 dark:text-black">
         Created by <span className="font-bold">AlanZalazar</span> - Funval2025
       </p>
     </div>

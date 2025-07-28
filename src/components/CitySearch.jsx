@@ -5,9 +5,27 @@ const CitySearch = ({ city, setCity }) => {
   const [isSearching, setIsSearching] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const searchRef = useRef(null);
   const inputRef = useRef(null);
 
   const API_KEY = import.meta.env.VITE_OPENWEATHER_KEY;
+
+  // Cerrar al hacer clic fuera
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        handleCancel();
+      }
+    };
+
+    if (isSearching) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isSearching]);
 
   const handleSearchClick = () => {
     setIsSearching(true);
@@ -28,9 +46,7 @@ const CitySearch = ({ city, setCity }) => {
 
   const handleSuggestionClick = (suggestion) => {
     setCity(`${suggestion.name}, ${suggestion.country}`);
-    setIsSearching(false);
-    setInputValue("");
-    setSuggestions([]);
+    handleCancel();
   };
 
   const fetchSuggestions = async (query) => {
@@ -71,7 +87,7 @@ const CitySearch = ({ city, setCity }) => {
   }, [inputValue, isSearching]);
 
   return (
-    <div className="relative">
+    <div className="relative" ref={searchRef}>
       {!isSearching ? (
         <button
           onClick={handleSearchClick}
@@ -93,74 +109,80 @@ const CitySearch = ({ city, setCity }) => {
           <span className="hidden md:block">Search for Places</span>
         </button>
       ) : (
-        <form onSubmit={handleSubmit} className="relative">
-          <div className="flex items-center">
-            <input
-              ref={inputRef}
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Search city..."
-              className="w-full p-3 px-5 rounded-full bg-[#2d3250] text-white focus:outline-none focus:ring-2 focus:ring-blue-500 "
-            />
-            <div className="absolute right-2 flex gap-1 ">
-              <button
-                type="submit"
-                className="p-2 text-blue-400 hover:text-blue-300"
-                disabled={!inputValue.trim() || isLoading}
-              >
-                {isLoading ? (
-                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                      fill="none"
+        <div className="fixed inset-0 bg-[#110f1d]/90 z-50 flex items-start justify-center pt-20 px-4 h-100 lg:w-[30%] lg:min-w-[380px]">
+          <form
+            onSubmit={handleSubmit}
+            className="relative w-full max-w-md"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center bg-[#2d3250] rounded-full shadow-xl">
+              <input
+                ref={inputRef}
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                placeholder="Search city..."
+                className="w-full p-4 px-5 bg-transparent text-white focus:outline-none rounded-full"
+              />
+              <div className="absolute right-2 flex gap-1">
+                <button
+                  type="submit"
+                  className="p-2 text-blue-400 hover:text-blue-500"
+                  disabled={!inputValue.trim() || isLoading}
+                >
+                  {isLoading ? (
+                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                      <circle
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        fill="none"
+                      />
+                    </svg>
+                  ) : (
+                    "Search"
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCancel}
+                  className="p-2 text-gray-400 hover:text-gray-300"
+                >
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
                     />
                   </svg>
-                ) : (
-                  "Search"
-                )}
-              </button>
-              <button
-                type="button"
-                onClick={handleCancel}
-                className="p-2 text-gray-400 hover:text-gray-300"
-              >
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
+                </button>
+              </div>
             </div>
-          </div>
 
-          {suggestions.length > 0 && (
-            <div className="absolute z-10 mt-2 w-full bg-[#2d3250] rounded-lg shadow-lg overflow-hidden">
-              {suggestions.map((suggestion, index) => (
-                <div
-                  key={`${suggestion.name}-${suggestion.country}-${index}`}
-                  onClick={() => handleSuggestionClick(suggestion)}
-                  className="px-4 py-2 hover:bg-[#3a4166] cursor-pointer flex justify-between"
-                >
-                  <span>{suggestion.name}</span>
-                  <span className="text-gray-400">{suggestion.country}</span>
-                </div>
-              ))}
-            </div>
-          )}
-        </form>
+            {suggestions.length > 0 && (
+              <div className="absolute z-10 mt-2 w-full bg-[#2d3250] rounded-lg shadow-lg overflow-hidden">
+                {suggestions.map((suggestion, index) => (
+                  <div
+                    key={`${suggestion.name}-${suggestion.country}-${index}`}
+                    onClick={() => handleSuggestionClick(suggestion)}
+                    className="px-4 py-2 hover:bg-[#3a4166] cursor-pointer flex justify-between text-white"
+                  >
+                    <span>{suggestion.name}</span>
+                    <span className="text-gray-400">{suggestion.country}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </form>
+        </div>
       )}
     </div>
   );

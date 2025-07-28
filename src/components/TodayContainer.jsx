@@ -21,7 +21,7 @@ const TodayContainer = ({ city, unitSystem }) => {
       <img
         src="/Cloud-background.png"
         alt="nubes"
-        className="absolute h-[50%] w-[110%] object-cover opacity-20"
+        className="absolute h-[50%] w-[110%] object-cover opacity-20 dark:opacity-85"
       />
       <div className="flex">
         {forecast.slice(0, 1).map((dayData, index) => (

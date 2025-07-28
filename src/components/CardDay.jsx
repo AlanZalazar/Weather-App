@@ -4,7 +4,7 @@ const CardDay = ({ dayData, unitSystem, index }) => {
   const tempUnit = unitSystem === "metric" ? "°C" : "°F";
 
   return (
-    <div className="text-base lg:text-[18px] w-[120px] lg:w-[140px] bg-[#1f213b] px-2 py-4 text-white justify-center items-center flex flex-col rounded-lg">
+    <div className="text-base lg:text-[18px] w-[120px] lg:w-[140px] bg-[#1f213b] dark:bg-sky-500 px-2 py-4 text-white dark:text-[#1f213b] dark:font-bold justify-center items-center flex flex-col rounded-lg dark:border dark:border-[#1f213b]">
       <h3>{formatDate(dayData.date, index)}</h3>
       <img
         src={`./weather/${dayData.icon}.png`}
@@ -16,7 +16,7 @@ const CardDay = ({ dayData, unitSystem, index }) => {
           {Math.round(dayData.temp_max)}
           {tempUnit}
         </span>
-        <span className="text-gray-500 text-sm lg:text-[16px]">
+        <span className="text-gray-500 text-sm lg:text-[16px] dark:text-black/70">
           {Math.round(dayData.temp_min)}
           {tempUnit}
         </span>

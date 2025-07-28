@@ -4,7 +4,7 @@ import TemperatureSwitcher from "./TemperatureSwitcher";
 const DaysContainer = ({ unitSystem, setUnitSystem, forecastData }) => {
   return (
     <div className="w-full p-4 lg:p-0  px-10 max-w-[800px]">
-      <div className=" justify-center md:justify-center lg:justify-end mb-4 lg:mb-0 lg:pt-4 hidden md:block ">
+      <div className=" justify-center md:justify-center lg:justify-end mb-4 lg:mb-0 lg:pt-4 hidden md:block z-10 ">
         <TemperatureSwitcher
           unitSystem={unitSystem}
           setUnitSystem={setUnitSystem}
